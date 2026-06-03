@@ -4,6 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import type { Address, CheckoutDraft } from '../types';
 import { calcDeliveryFee } from '../utils/checkout';
+import { FIELD_LIMITS } from '../utils/fieldLimits';
+import { normalizePhoneInput, validatePhone } from '../utils/phoneValidation';
+import { validateEmail } from '../utils/authValidation';
 import '../styles/commerce.css';
 import './CheckoutPage.css';
 
@@ -46,11 +49,20 @@ export function CheckoutPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) {
-      setError('Email is required');
+    const emailError = validateEmail(email);
+    if (emailError) {
+      setError(emailError);
       return;
     }
-    const draft: CheckoutDraft = { email: email.trim(), address };
+    const phoneError = validatePhone(address.phone);
+    if (phoneError) {
+      setError(phoneError);
+      return;
+    }
+    const draft: CheckoutDraft = {
+      email: email.trim(),
+      address: { ...address, phone: normalizePhoneInput(address.phone) },
+    };
     navigate('/payment', { state: { draft } });
   };
 
@@ -77,6 +89,7 @@ export function CheckoutPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              maxLength={FIELD_LIMITS.email.max}
             />
           </div>
 
@@ -90,18 +103,26 @@ export function CheckoutPage() {
                 onChange={(e) =>
                   setAddress({ ...address, fullName: e.target.value })
                 }
+                maxLength={FIELD_LIMITS.name.max}
+                minLength={FIELD_LIMITS.name.min}
               />
             </div>
             <div className="form-field">
-              <label htmlFor="phone">Phone</label>
+              <label htmlFor="phone">Phone (10 digits)</label>
               <input
                 id="phone"
                 type="tel"
+                inputMode="tel"
                 required
                 value={address.phone}
                 onChange={(e) =>
-                  setAddress({ ...address, phone: e.target.value })
+                  setAddress({
+                    ...address,
+                    phone: normalizePhoneInput(e.target.value),
+                  })
                 }
+                maxLength={FIELD_LIMITS.phone.max}
+                minLength={FIELD_LIMITS.phone.min}
               />
             </div>
           </div>
@@ -116,6 +137,7 @@ export function CheckoutPage() {
               onChange={(e) =>
                 setAddress({ ...address, addressLine: e.target.value })
               }
+              maxLength={FIELD_LIMITS.addressLine.max}
             />
           </div>
 
@@ -129,6 +151,7 @@ export function CheckoutPage() {
                 onChange={(e) =>
                   setAddress({ ...address, city: e.target.value })
                 }
+                maxLength={FIELD_LIMITS.city.max}
               />
             </div>
             <div className="form-field">
@@ -140,6 +163,7 @@ export function CheckoutPage() {
                 onChange={(e) =>
                   setAddress({ ...address, state: e.target.value })
                 }
+                maxLength={FIELD_LIMITS.state.max}
               />
             </div>
           </div>
@@ -148,12 +172,19 @@ export function CheckoutPage() {
             <label htmlFor="pincode">Pincode</label>
             <input
               id="pincode"
+              type="text"
+              inputMode="numeric"
               required
               pattern="[0-9]{6}"
               value={address.pincode}
               onChange={(e) =>
-                setAddress({ ...address, pincode: e.target.value })
+                setAddress({
+                  ...address,
+                  pincode: e.target.value.replace(/\D/g, '').slice(0, FIELD_LIMITS.pincode.max),
+                })
               }
+              maxLength={FIELD_LIMITS.pincode.max}
+              minLength={FIELD_LIMITS.pincode.min}
             />
           </div>
 

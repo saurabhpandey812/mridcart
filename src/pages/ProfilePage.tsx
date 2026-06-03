@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { validateName } from '../utils/authValidation';
+import { FIELD_LIMITS } from '../utils/fieldLimits';
+import { normalizePhoneInput, validatePhone } from '../utils/phoneValidation';
 import '../styles/commerce.css';
 import './ProfilePage.css';
 
@@ -10,6 +13,7 @@ export function ProfilePage() {
   const [name, setName] = useState(user?.name ?? '');
   const [phone, setPhone] = useState(user?.phone ?? '');
   const [saved, setSaved] = useState(false);
+  const [formError, setFormError] = useState('');
 
   if (!isAuthenticated || !user) {
     return (
@@ -32,7 +36,17 @@ export function ProfilePage() {
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-    updateProfile({ name, phone });
+    const nameError = validateName(name);
+    const phoneError = validatePhone(phone);
+    if (nameError || phoneError) {
+      setFormError(nameError ?? phoneError ?? '');
+      return;
+    }
+    setFormError('');
+    updateProfile({
+      name: name.trim(),
+      phone: normalizePhoneInput(phone),
+    });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
@@ -68,6 +82,11 @@ export function ProfilePage() {
 
       {tab === 'profile' && (
         <form className="commerce-card form-grid" onSubmit={handleSave}>
+          {formError && (
+            <p className="form-error" role="alert">
+              {formError}
+            </p>
+          )}
           <div className="form-field">
             <label htmlFor="profile-name">Full name</label>
             <input
@@ -75,6 +94,8 @@ export function ProfilePage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              maxLength={FIELD_LIMITS.name.max}
+              minLength={FIELD_LIMITS.name.min}
             />
           </div>
           <div className="form-field">
@@ -82,12 +103,16 @@ export function ProfilePage() {
             <input id="profile-email" value={user.email} disabled />
           </div>
           <div className="form-field">
-            <label htmlFor="profile-phone">Phone</label>
+            <label htmlFor="profile-phone">Phone (10 digits)</label>
             <input
               id="profile-phone"
+              type="tel"
+              inputMode="tel"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => setPhone(normalizePhoneInput(e.target.value))}
               required
+              maxLength={FIELD_LIMITS.phone.max}
+              minLength={FIELD_LIMITS.phone.min}
             />
           </div>
           <button type="submit" className="btn-primary">

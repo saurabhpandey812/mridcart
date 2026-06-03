@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import type { CheckoutDraft, PaymentMethod } from '../types';
 import { calcDeliveryFee } from '../utils/checkout';
+import { FIELD_LIMITS } from '../utils/fieldLimits';
 import '../styles/commerce.css';
 
 const PAYMENT_OPTIONS: { id: PaymentMethod; label: string; desc: string }[] = [
@@ -100,9 +101,16 @@ export function PaymentPage() {
             <input
               id="card"
               placeholder="1234 5678 9012 3456"
+              inputMode="numeric"
               value={cardNumber}
-              onChange={(e) => setCardNumber(e.target.value)}
+              onChange={(e) =>
+                setCardNumber(
+                  e.target.value.replace(/\D/g, '').slice(0, FIELD_LIMITS.cardNumber.max)
+                )
+              }
               required
+              maxLength={FIELD_LIMITS.cardNumber.max}
+              minLength={FIELD_LIMITS.cardNumber.min}
             />
           </div>
         )}
