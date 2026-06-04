@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Layout } from './components/Layout';
+import { Layout } from './components/layout/Layout';
 import { AppProviders } from './context/AppProviders';
-import { CartPage } from './pages/CartPage';
-import { CheckoutPage } from './pages/CheckoutPage';
-import { HomePage } from './pages/HomePage';
-import { LoginPage, RegisterPage } from './pages/LoginPage';
-import { OrderSuccessPage } from './pages/OrderSuccessPage';
-import { PaymentPage } from './pages/PaymentPage';
-import { ProductDetailPage } from './pages/ProductDetailPage';
-import { ProfilePage } from './pages/ProfilePage';
-import { CategoryPage } from './pages/CategoryPage';
-import { WishlistPage } from './pages/WishlistPage';
+import { CartPage } from './pages/cart/CartPage';
+import { CheckoutPage } from './pages/checkout/CheckoutPage';
+import { HomePage } from './pages/home/HomePage';
+import { LoginPage, RegisterPage } from './pages/login/LoginPage';
+import { OrderSuccessPage } from './pages/order-success/OrderSuccessPage';
+import { PaymentPage } from './pages/payment/PaymentPage';
+import { ProductDetailPage } from './pages/product-detail/ProductDetailPage';
+import { ProfilePage } from './pages/profile/ProfilePage';
+import { CategoryPage } from './pages/category/CategoryPage';
+import { WishlistPage } from './pages/wishlist/WishlistPage';
 import './styles/commerce.css';
 
 function App() {

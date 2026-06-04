@@ -1,0 +1,48 @@
+.profile-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.order-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.order-id {
+  font-weight: 700;
+  color: #282c3f;
+  margin: 0;
+}
+
+.order-date {
+  font-size: 0.85rem;
+  color: #94969f;
+  margin: 0.25rem 0 0;
+}
+
+.order-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #2e7d32;
+  background: #e8f5e9;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.order-items,
+.order-pay {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: #535766;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
