@@ -1,0 +1,402 @@
+/* CHICCHAPS-style auth — responsive, viewport-fit */
+.zara-auth-root {
+  align-items: center;
+  background: #fff;
+  box-sizing: border-box;
+  display: flex;
+  font-family: Inter, Arial, sans-serif;
+  justify-content: center;
+  max-height: calc(100vh - var(--header-h, 72px));
+  min-height: calc(100vh - var(--header-h, 72px) - 120px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: clamp(1rem, 3vh, 2rem) clamp(0.75rem, 3vw, 1.5rem);
+  width: 100%;
+}
+
+.zara-auth-container {
+  background: #fff;
+  border-radius: clamp(8px, 1.5vw, 16px);
+  box-shadow: 0 4px 24px 0 rgba(60, 60, 60, 0.08);
+  display: flex;
+  max-height: min(520px, calc(100vh - var(--header-h, 72px) - 3rem));
+  max-width: min(760px, 94vw);
+  min-height: min(400px, calc(100vh - var(--header-h, 72px) - 3rem));
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.2s;
+  width: 100%;
+}
+
+.zara-auth-side {
+  align-items: center;
+  background: #fff;
+  display: flex;
+  flex: 1 1 50%;
+  justify-content: center;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zara-auth-image-side {
+  min-height: 0;
+}
+
+.zara-auth-image-side img,
+.zara-auth-video {
+  border-radius: 0;
+  display: block;
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  width: 100%;
+}
+
+.zara-auth-form-side {
+  background: #fff;
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+  z-index: 2;
+}
+
+.zara-auth-form {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 2vh, 1.25rem);
+  justify-content: center;
+  margin: 0 auto;
+  max-width: min(300px, 100%);
+  width: 100%;
+}
+
+.zara-auth-form h1 {
+  color: #111;
+  font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  margin: 0 0 clamp(0.25rem, 1vh, 0.5rem);
+  text-align: left;
+}
+
+.zara-auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.zara-auth-label {
+  color: #666;
+  font-size: clamp(0.7rem, 1.6vw, 0.78rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.zara-auth-field-error {
+  color: #c62828;
+  font-size: clamp(0.72rem, 1.6vw, 0.8rem);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.zara-auth-hint {
+  color: #888;
+  font-size: clamp(0.72rem, 1.6vw, 0.8rem);
+  line-height: 1.35;
+  margin: -0.35rem 0 0;
+}
+
+.zara-auth-form input {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid #ececec;
+  color: #232323;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  height: clamp(38px, 5vh, 44px);
+  margin-bottom: 0;
+  outline: none;
+  padding: 0 0 0.25rem;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.zara-auth-field--invalid input,
+.zara-auth-form input.zara-auth-input-invalid {
+  border-bottom-color: #c62828;
+}
+
+.zara-auth-form input::placeholder {
+  color: #aaa;
+}
+
+.zara-auth-form input:focus {
+  border-bottom-color: #111;
+}
+
+.zara-auth-form button[type='submit'] {
+  background: #fff;
+  border: 1.5px solid #111;
+  border-radius: 0;
+  color: #111;
+  cursor: pointer;
+  font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+  font-weight: 700;
+  height: clamp(40px, 5vh, 44px);
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+  width: 100%;
+}
+
+.zara-auth-form button[type='submit']:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.zara-auth-form button[type='submit']:hover:not(:disabled) {
+  background: #111;
+  color: #fff;
+}
+
+.zara-auth-switch {
+  color: #888;
+  font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+  line-height: 1.4;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+.zara-auth-switch button,
+.zara-auth-switch span,
+.zara-auth-switch a {
+  background: none;
+  border: none;
+  color: #111;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  margin-left: 4px;
+  padding: 0;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.zara-auth-switch button:hover,
+.zara-auth-switch span:hover,
+.zara-auth-switch a:hover {
+  color: #888;
+}
+
+.zara-auth-guest {
+  color: #888;
+  font-size: clamp(0.75rem, 1.6vw, 0.82rem);
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+.zara-auth-guest a {
+  color: #111;
+  text-decoration: underline;
+}
+
+/* Desktop: panel swap animation */
+@media (min-width: 901px) {
+  .zara-auth-root.signup .zara-auth-image-side {
+    transform: translateX(100%);
+  }
+
+  .zara-auth-root.signup .zara-auth-form-side {
+    transform: translateX(-100%);
+  }
+
+  .zara-auth-root.login .zara-auth-form-side,
+  .zara-auth-root.login .zara-auth-image-side {
+    transform: translateX(0);
+  }
+}
+
+@keyframes zara-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.zara-auth-spinner {
+  animation: zara-spin 0.7s linear infinite;
+  border: 2.5px solid #111;
+  border-radius: 50%;
+  border-top-color: #fff;
+  display: inline-block;
+  height: 20px;
+  vertical-align: middle;
+  width: 20px;
+}
+
+@keyframes zara-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes zara-toast-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.zara-auth-toast {
+  animation: zara-toast-in 0.3s forwards, zara-toast-out 0.3s 1.7s forwards;
+  background: #111;
+  border-radius: 32px;
+  bottom: clamp(1rem, 4vh, 2rem);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  color: #fff;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight: 600;
+  left: 50%;
+  max-width: 90vw;
+  opacity: 0;
+  padding: 12px 24px;
+  pointer-events: none;
+  position: fixed;
+  text-align: center;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+.zara-auth-toast.error {
+  background: #c62828;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .zara-auth-root {
+    max-height: none;
+    min-height: auto;
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .zara-auth-container {
+    box-shadow: none;
+    flex-direction: column;
+    max-height: none;
+    min-height: 0;
+    max-width: min(480px, 96vw);
+  }
+
+  .zara-auth-side {
+    flex: none;
+    width: 100%;
+  }
+
+  .zara-auth-image-side {
+    max-height: clamp(140px, 28vh, 200px);
+    min-height: 0;
+  }
+
+  .zara-auth-image-side img,
+  .zara-auth-video {
+    max-height: clamp(140px, 28vh, 200px);
+  }
+
+  .zara-auth-form-side {
+    flex: 1;
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .zara-auth-root.signup .zara-auth-form-side {
+    order: 1;
+    transform: none;
+  }
+
+  .zara-auth-root.signup .zara-auth-image-side {
+    order: 2;
+    transform: none;
+  }
+
+  .zara-auth-root.login .zara-auth-image-side {
+    order: 1;
+  }
+
+  .zara-auth-root.login .zara-auth-form-side {
+    order: 2;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .zara-auth-root {
+    padding: 0.5rem 0.5rem 1.5rem;
+  }
+
+  .zara-auth-container {
+    border-radius: 12px;
+    max-width: 100%;
+  }
+
+  .zara-auth-image-side {
+    max-height: clamp(120px, 22vh, 160px);
+  }
+
+  .zara-auth-image-side img,
+  .zara-auth-video {
+    max-height: clamp(120px, 22vh, 160px);
+  }
+
+  .zara-auth-form-side {
+    padding: 1rem 0.75rem 1.25rem;
+  }
+
+  .zara-auth-form {
+    gap: 0.65rem;
+  }
+}
+
+/* Short laptop screens (100% zoom, ~768px height) */
+@media (max-height: 800px) and (min-width: 901px) {
+  .zara-auth-root {
+    min-height: auto;
+    padding: 0.75rem 1rem;
+  }
+
+  .zara-auth-container {
+    max-height: calc(100vh - var(--header-h, 72px) - 1.5rem);
+    min-height: min(360px, calc(100vh - var(--header-h, 72px) - 1.5rem));
+  }
+
+  .zara-auth-form {
+    gap: 0.65rem;
+  }
+
+  .zara-auth-form h1 {
+    font-size: 1.35rem;
+  }
+
+  .zara-auth-form input,
+  .zara-auth-form button[type='submit'] {
+    height: 38px;
+  }
+}
+
+/* Wide desktop — thoda compact, zyada bada na lage */
+@media (min-width: 1400px) {
+  .zara-auth-container {
+    max-width: 720px;
+    max-height: 500px;
+    min-height: 400px;
+  }
+}
